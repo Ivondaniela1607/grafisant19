@@ -1,0 +1,311 @@
+.container-header {
+  width: 100%;
+  height: 500px;
+  //background-image: url("../.././../../assets/images/home/imagen1.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+body {
+  background-color: white !important;
+}
+
+.card-home {
+  padding: 2rem !important;
+  color: white;
+}
+
+.limit-line {
+  overflow: hidden;
+  text-align: justify;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  height: 70px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.bg-purple {
+  background: #b35feb;
+}
+
+.bg-yellow {
+  background: #ffc107;
+}
+
+.bg-red {
+  background: #dc3545;
+}
+
+.bg-cyan {
+  background: #00cee7;
+}
+
+.bg-grey {
+  background: #f4f4fc;
+}
+
+.bg-salmon {
+  background: #fc4c3c;
+}
+
+.bg-blue {
+  background: #01182c;
+}
+
+.bg-green {
+  background: #B0CA13;
+}
+
+.btn-radious {
+  border-radius: 20px;
+  background: #0000001f;
+  border: 1px solid #ffffff;
+  width: fit-content;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  color: #ffffffc7;
+}
+
+.btn-radious:active {
+  background: #0000004f;
+  border-color: white;
+}
+
+.line-cyan {
+  width: 55px;
+  height: 2px;
+  border-radius: 5px;
+  background-color: rgb(93, 203, 228);
+  margin: 18px 0;
+  margin-left: 1%;
+}
+
+.img-process {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+
+.circle {
+  height: 160px;
+  width: 160px;
+  border-radius: 50%;
+  background-color: white;
+  clip-path: circle(100px at center);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle-small {
+  width: 50px;
+  height: 50px;
+  background-color: rgb(93, 203, 228);
+  border-radius: 50px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.line-connect {
+  width: 25%;
+  height: 2px;
+  background-color: #8080806e;
+}
+
+.gap {
+  margin: 0 20px;
+}
+
+.img-card {
+  height: 50%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.w-30 {
+  width: 30%;
+}
+
+.w-48 {
+  width: 48%;
+}
+
+.w-20 {
+  width: 20%;
+}
+
+.icon-contacto {
+  font-size: 50px;
+  color: rgb(93, 203, 228);
+}
+
+.icon-rs {
+  border: 2px var(--bs-red) solid;
+  padding: 10px;
+  border-radius: 50%;
+  color: var(--bs-red);
+  font-size: 50px;
+}
+
+.ult-trabjs img {
+  width: 100px;
+  height: 71px;
+  object-fit: cover;
+  margin-right: 5px;
+
+}
+
+.foot {
+  border-top: 1px rgb(93, 203, 228) solid;
+  border-bottom: 1px rgb(93, 203, 228) solid;
+}
+
+
+#hero {
+  height: 600px;
+  overflow: hidden;
+  position: relative;
+/*   background-image: url("/src/assets/images/hero/GRAFISANT-FondoWeb_23.png"); */
+  z-index: -1;
+}
+
+
+
+#content {
+  background-color: white;
+}
+
+.layer {
+  background-position: bottom center;
+  background-size: auto;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 600px;
+  position: fixed;
+  z-index: -1;
+}
+
+#hero-mobile {
+  display: none;
+ /*  background: url("src/assets/images/hero/GRAFISANT-FondoWeb_23.png") no-repeat center top/cover; */
+  height: 420px;
+  z-index: -1;
+  overflow: hidden;
+  position: relative;
+}
+
+.first-section {
+  padding: 50px 0 20px 0;
+}
+
+.text-header {
+  font-size: 50px;
+  text-align: center;
+}
+
+
+
+#hero,
+.layer {
+  min-height: 600px;
+}
+
+.layer-bg {
+  //  background-image: url("..//src/assets/images/hero/GRAFISANT-FondoWeb_23.png");
+  // background-position: top center;
+}
+
+.layer-1 {
+  background-image: url("/src/assets/images/hero/mariposas.png");
+  background-position: left bottom;
+  margin-left: 50px !important;
+  margin-bottom: 100px;
+  background-size: 250px;
+
+}
+
+.layer-2 {
+  background-image: url("/src/assets/images/hero/santiago.png");
+
+}
+
+.layer-3 {
+  background-image: url("/src/assets/images/hero/Logo_con_sombra.svg");
+  // width: 450px;
+  // height: auto;
+  background-position: left top;
+  background-size: 450px;
+  margin-left: 50px !important;
+
+}
+
+.layer-4 {
+
+  // sombra negra
+  background-image: url("/src/assets/iages/hero/cloud.png");
+  background-position: center top;
+  background-size: 850px;
+  margin-left: 150px !important;
+}
+
+.layer-overlay {
+
+  //background-image: url("..//src/assets/images/hero/GRAFISANT-FondoWeb_23.png");
+
+}
+
+.logo-grafisant img {
+  width: 30%;
+}
+
+.container-contacto {
+  display: flex;
+  justify-content: space-around;
+}
+
+.detail-service {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.container-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+@media only screen and (max-width: 768px) {
+  #hero {
+    display: none;
+  }
+
+  #hero-mobile {
+    display: block;
+  }
+
+  .logo-grafisant img {
+    width: 70%;
+  }
+
+  .circle {
+    height: 100px;
+    width: 100px;
+  }
+}
+
+.icon-rs:hover {
+  color: rgb(93, 203, 228);
+  border: 2px rgb(93, 203, 228) solid;
+  transition: .5s;
+}
