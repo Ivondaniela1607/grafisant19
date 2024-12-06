@@ -1,0 +1,34 @@
+.card-orders {
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.order-header {
+  background-color: #f7f7f7;
+  margin-left: -4px;
+  margin-right: -4px;
+  padding: 12px;
+  border-radius: 0.25rem;
+  border-bottom: 1px #d0d0d0 solid;
+}
+
+.order-body {
+  padding: 16px;
+}
+
+.message {
+  display: inline-block;
+  border: 0;
+  padding: 12px 20px 20px 8px;
+  position: relative;
+}
+
+.productos {
+  display: grid;
+  grid-template-columns: 40% 40% 20%;
+}
+

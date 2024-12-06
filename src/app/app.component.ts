@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,10 @@ export class AppComponent {
   title = 'front';
 
   loading = signal(true);
+
+  private authService = inject(AuthService);
   ngOnInit() {
+
     setTimeout(() => {
       this.loading.set(false);
     }, 3000);

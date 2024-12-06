@@ -4,6 +4,9 @@ import { HomeComponent } from './pages/home/home.component';
 import { DetailProductoComponent } from './pages/home/detail-producto/detail-producto.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { FormSolicitarPresupuestoComponent } from './forms/form-solicitar-presupuesto/form-solicitar-presupuesto.component';
+import { OrdersComponent } from './pages/orders/orders.component';
+import { AuthGuard } from './core/guard/auth.guard';
+import { LoggedInGuard } from './core/guard/logged-in.guard';
 
 export const routes: Routes = [
   {
@@ -20,8 +23,13 @@ export const routes: Routes = [
         component: DetailProductoComponent
       },
       {
+        canActivate: [LoggedInGuard],
         path: 'solicitar-presupuesto',
         component: FormSolicitarPresupuestoComponent
+      },
+      {
+        path: 'pedidos',
+        component: OrdersComponent
       },
     
     ]

@@ -59,7 +59,7 @@
   </div>
 
   <nav class=" text-white px-4 py-3">
-    <div class="container mx-auto flex justify-between items-center">
+    <div class="container mx-auto flex justify-between items-center w-full">
    <!-- Opciones del menú -->
     <div 
       [class.hidden]="!isMenuOpen"
@@ -81,6 +81,13 @@
       >
         Solicitar Presupuesto
       </button>
+      <div class="" style="border: 1px solid red;">
+        <button (click)="togglePopoverChatsArchivados()" cdkOverlayOrigin #trigger="cdkOverlayOrigin"  class="text-gray-900">
+          aca irira el dropbox
+        </button>
+        
+
+      </div>
     </div>
       <!-- Botón hamburguesa -->
       <button 
@@ -104,5 +111,16 @@
   </nav>
   
   
-  
+  <ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="isPopoverOpenChatsArchivados()" [cdkConnectedOverlayHasBackdrop]="true"
+  [cdkConnectedOverlayOffsetX]="0" [cdkConnectedOverlayOffsetY]="0"
+  [cdkConnectedOverlayBackdropClass]="'cdk-overlay-transparent-backdrop'"
+  [cdkConnectedOverlayPanelClass]="'example-dialog-panel'"
+  (backdropClick)="isPopoverOpenChatsArchivados.set(false)">
+    @if (isPopoverOpenChatsArchivados()) {
+      este el contenido
+    }
+</ng-template>
 </div>
+
+

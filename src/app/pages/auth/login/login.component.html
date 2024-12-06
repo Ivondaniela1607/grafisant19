@@ -1,31 +1,34 @@
 <div class="bg-image">
-  <div class="row w-100 mx-0 auth-page">
-    <div class="col-md-8 col-xl-6 mx-auto">
-      <div class="card">
-        login
-<!--      <div class="row">
-          <div class="col-md-4 pe-md-0">
+  <div class="grid grid-cols-12 w-full ">
+    <div class="col-span-3">
+    </div>
+    <div class="col-span-6 ">
+      <div class="shadow-md" >
+        <div class="grid grid-cols-12 ">
+          <div class="col-span-4 ">
             <div
-              class="auth-side-wrapper"
-              style="background-size: cover; background-position: center"
-              [ngStyle]="{
-                'background-image': 'url(' + imagenCard + ')'
-              }"
+              class=""
+              style=" width: 100%; height: 100%; background-size: cover; background-position: center"
+              [ngStyle]="{ 'background-image': 'url(' + imagenCard + ')' }"
             ></div>
           </div>
-          <div class="col-md-8 ps-md-0">
-            <div class="auth-form-wrapper px-4 py-5">
-              <a routerLink="." class="nobleui-logo d-block mb-2">
+          <div class="col-span-8 ps-md-0 py-6">
+            <div class="px-4 py-5">
+              <a routerLink="." class="">
                 <img
                   width="150px"
                   src="assets/images/logo/Logo_2ldpi.svg"
                   alt="logo"
                 />
               </a>
-              <h5 class="text-muted fw-normal mb-4">Bienvenido a tu cuenta</h5>
-              <form class="forms-sample" >
+              <h5 class="">Bienvenido a tu cuenta</h5>
+              <form class="mt-8" [formGroup]="signInForm" #signInNgForm="ngForm">
                 <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">
+                  <mat-form-field class="w-full">
+                    <mat-label>Dirección email</mat-label>
+                    <input type="email" formControlName="usuario" matInput />
+                  </mat-form-field>
+            <!--       <label for="exampleInputEmail1" class="form-label">
                     Dirección de email
                   </label>
                   <input
@@ -35,10 +38,14 @@
                     id="exampleInputEmail1"
                     placeholder="Email"
                     formControlName="usuario"
-                  />
+                  /> -->
                 </div>
                 <div class="mb-3">
-                  <label for="exampleInputPassword1" class="form-label">
+                  <mat-form-field class="w-full">
+                    <mat-label>Password</mat-label>
+                    <input type="password" formControlName="password" matInput />
+                  </mat-form-field>
+                <!--   <label for="exampleInputPassword1" class="form-label">
                     Password
                   </label>
                   <input
@@ -48,40 +55,39 @@
                     autocomplete="current-password"
                     placeholder="Password"
                     formControlName="password"
-                  />
+                  /> -->
                 </div>
                 <div class="form-check mb-3">
-                  <input
-                    type="checkbox"
-                    class="form-check-input"
-                    id="authCheck"
-                    formControlName="remember"
-                  />
-                  <label class="form-check-label" for="authCheck">
-                    Recuerdame
-                  </label>
+                  <mat-checkbox class="-ml-2" [formControlName]="'rememberMe'">
+                    <span class=""> Recuerdame</span>
+                  </mat-checkbox>
                 </div>
                 <div>
                   <button
                     type="submit"
-                    class="btn btn-primary me-2 mb-2 mb-md-0"
-                 
-                  >
-                    Login
-                  </button>
+                    class=" px-4 py-2 bg-[#B0CA13] text-white rounded-full"
+                    (click)="onLoggedin()"
 
+                  >
+                    Iniciar sesión
+                  </button>
                 </div>
-                <a routerLink="/auth/register" class="d-block mt-3 text-muted">
-                  ¿No eres usuario?. Date de alta
-                </a>
-                <a routerLink="/auth/restablecer-password" class="d-block mt-3 text-muted">
-                  ¿Olvidaste tu contraseña?
-                </a>
+                <div class="flex flex-col justify-start mt-4">
+                  <a routerLink="/auth/register" class="text-gray-400 cursor-pointer hover:text-green-900 duration-300">
+                    ¿No eres usuario?. Date de alta
+                  </a>
+                  <a routerLink="/auth/restablecer-password" class="text-gray-400 cursor-pointer hover:text-green-900 duration-300">
+                    ¿Olvidaste tu contraseña?
+                  </a>
+                </div>
               </form>
             </div>
           </div>
-        </div> -->
+
+        </div>
       </div>
+    </div>
+    <div class="col-span-3">
     </div>
   </div>
 </div>
