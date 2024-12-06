@@ -1,30 +1,30 @@
-import { inject, Injectable } from "@angular/core";
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from "@angular/common/http";
-import { Observable, throwError } from "rxjs";
-import { catchError } from "rxjs/operators";
+import { HttpErrorResponse, HttpInterceptorFn } from "@angular/common/http";
+import { catchError, throwError } from "rxjs";
+import { inject } from "@angular/core";
 import { Router } from "@angular/router";
 
-@Injectable()
-export class HeadersInterceptor implements HttpInterceptor {
-  private _router = inject(Router);
+export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
+  const _router = inject(Router); // Inyección de Router para redirección
+  const token = typeof localStorage !== 'undefined' ? localStorage.getItem('token') : null;
 
-  get authToken() {
-    return localStorage.getItem("token") || "";
-  }
-
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const cloneReq = request.clone({
+  const authReq = token
+  ? req.clone({
       setHeaders: {
-        "auth-token": this.authToken,
+        "auth-token": token,
       },
-    });
-    return next.handle(cloneReq).pipe(
-      catchError((error: HttpErrorResponse) => {
-        if (error.status === 401) {
-          this._router.navigate(["/auth/login"]);
-        }
-        return throwError(error);
-      }),
-    );
-  }
-}
+    })
+  : req;
+  // Pasar la solicitud clonada o original al siguiente paso
+  return next(authReq).pipe(
+    catchError((error: HttpErrorResponse) => {
+
+      // Redirigir si es un error 401 (No autorizado)
+      if (error.status === 401) {
+        _router.navigate(['/auth/login']);
+      }
+
+      // Propagar el error para que sea manejado más adelante si es necesario
+      return throwError(() => error);
+    })
+  );
+};

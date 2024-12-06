@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { random } from 'lodash';
 import { MatSelectModule } from "@angular/material/select";
@@ -8,6 +8,8 @@ import { MessageSwal } from '../../utils/message';
 import { Router } from '@angular/router';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from '@angular/material/input';
+import { ICategoria, IPresupuesto, ISubcategoria } from '../../core/interfaces/presupuesto.interface';
+
 
 @Component({
   selector: 'app-form-solicitar-presupuesto',
@@ -16,16 +18,15 @@ import { MatInputModule } from '@angular/material/input';
   styleUrl: './form-solicitar-presupuesto.component.scss'
 })
 export class FormSolicitarPresupuestoComponent implements OnInit {
-
   formPresupuesto: FormGroup = new FormGroup({}); 
-  categories:any = [];
-  subcategorias:any = [];
   imagenCard = 'assets/images/others/presupuesto' + random(1, 3) + '.png';
 
-  agregar: boolean = false;
-  subcat: boolean = true;
-  add: boolean = true;
-  presupuesto:any = [];
+  categories = signal<ICategoria[]>([]);
+  presupuesto = signal<IPresupuesto[]>([]);
+  subcategorias = signal<ISubcategoria[]>([]);
+  add = signal<boolean>(true);
+  subcat = signal<boolean>(true);
+
 
   private formBuilder = inject(FormBuilder);
   private presupuestoService = inject(PresupuestoService);
@@ -33,8 +34,6 @@ export class FormSolicitarPresupuestoComponent implements OnInit {
   private router = inject(Router);
 
   ngOnInit(): void {
-    console.log('imagenCard', this.imagenCard);
-    
     this.formControl();
     this.getCategorias();
     /*   this.getPresupuestos(); */
@@ -57,9 +56,7 @@ export class FormSolicitarPresupuestoComponent implements OnInit {
   getCategorias() {
     this.presupuestoService.getCategorias({}).subscribe({
       next: (res: any) => {
-        this.categories = res;
-        console.log('this.categorues', this.categories);
-        
+        this.categories.set(res);
       },
     });
   }
@@ -67,12 +64,11 @@ export class FormSolicitarPresupuestoComponent implements OnInit {
   savePresupuesto() {
     let body = {
       ...this.formPresupuesto.value,
-      presupuesto: this.presupuesto,
+      presupuesto: this.presupuesto(),
     };
-/*    this.app.openLoader(); */
+    
     this.presupuestoService.savePresupuestos(body).subscribe({
       next: (res: any) => {
-/*         this.app.closeLoader(); */
         if (!res['ok']) {
           this.messageSwal.showError(
             'Registro de presupuesto',
@@ -88,7 +84,6 @@ export class FormSolicitarPresupuestoComponent implements OnInit {
         this.router.navigate(['/pedidos']);
       },
       error: () => {
-      /*   this.app.closeLoader(); */
         this.messageSwal.showError(
           'Registro de presupuesto',
           'Ha ocurrido un error al enviar presupuestos'
@@ -98,87 +93,50 @@ export class FormSolicitarPresupuestoComponent implements OnInit {
   }
 
   selectCategoria(event: any) {
-    console.log('event', event);
-    console.log('this.formPresupuesto', this.formPresupuesto);
-    console.log('this.formPresupuesto.value.categoria', this.formPresupuesto.value.categoria);
-    console.log('this.formPresupuesto.value.categoria.categoria', this.formPresupuesto.value.categoria.categoria);
-    console.log('this.formPresupuesto.get', this.formPresupuesto.get('categoria'));
-    
-    if(this.formPresupuesto.value.categoria.categoria === 'Pegatinas' || this.formPresupuesto.value.categoria.categoria === 'Vinilos'){
-      this.add = false;
-    }else {
-      this.add = true;
-    }
-    console.log('this.add', this.add);
-    
+    this.add.set(this.formPresupuesto.value.categoria.categoria === 'Pegatinas' || this.formPresupuesto.value.categoria.categoria === 'Vinilos' ? false : true);
     this.formPresupuesto.get('subcategoria')?.patchValue(null);
     if (!event) {
-      this.subcategorias = [];
+      this.subcategorias.set([]); 
     } else {
       const body = {
         id_categoria: event.value.id_categoria
       }
       this.presupuestoService.getSubcategorias(body).subscribe({
         next: (res: any) => {
-          this.subcategorias = res;
-          console.log('this.subcategorias', this.subcategorias);
-          
-          if (this.subcategorias.length === 0) {
-            this.subcat = false;
-          } else {
-            this.subcat = true;
-          }
+          this.subcategorias.set(res);
+          this.subcat.set(this.subcategorias().length > 0 ? true : false);
         },
       });
     }
   }
 
-  selectSubcategoria(event: any) {
-    this.agregar = true;
-    console.log(this.formPresupuesto.value.subcategoria);
-    
-    if(this.formPresupuesto.value.subcategoria){
-      this.add = false;
-    }else {
-      this.add = true;
-    }
-    console.log(this.add);
+  selectSubcategoria() {
+    this.add.set(this.formPresupuesto.value.subcategoria ? false : true);
   }
 
   agregarItem() {
-    console.log('this.formPresupuesto', this.formPresupuesto);
-    console.log('this.formPresupuesto.get', this.formPresupuesto.get('categoria'));
-    
     const body:any = {
       categoria: this.formPresupuesto.get('categoria')?.value,
       subcategoria: this.formPresupuesto.get('subcategoria')?.value,
       cantidad: this.formPresupuesto.get('cantidad')?.value,
     };
-    this.presupuesto.push(body);
+    this.presupuesto.set([...this.presupuesto(), body]);
     this.formPresupuesto.get('subcategoria')?.patchValue(null);
     this.formPresupuesto.get('categoria')?.patchValue(null);
     this.formPresupuesto.get('cantidad')?.patchValue(1);
-    this.add = true;
-    console.log('this.presupuesto', this.presupuesto);
-    console.log('this.formPresupuesto', this.formPresupuesto);
-    
+    this.add.set(true);
   }
 
   deleteItem(i:any) {
-    let index = this.presupuesto.findIndex(
+    let index = this.presupuesto().findIndex(
       (c: any) => c.categoria.id_categoria == i.categoria.id_categoria
     );
     if (index != -1) {
-      this.presupuesto.splice(index, 1);
+      this.presupuesto().splice(index, 1);
     }
   }
 
   cantidad(){
-    if(this.formPresupuesto.value.cantidad){
-      this.add = false;
-    }else {
-      this.add = true;
-    }
+    this.add.set(this.formPresupuesto.value.cantidad ? false : true);
   }
-
 }

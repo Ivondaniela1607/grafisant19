@@ -7,10 +7,14 @@ import { PresupuestoService } from '../../core/services/presupuestos.service';
 import { MessageSwal } from '../../utils/message';
 import { environment } from '../../../environments/environment';
 import Swal from 'sweetalert2';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-orders',
-  imports: [CommonModule],
+  imports: [MatInputModule, MatFormFieldModule, MatSelectModule, CommonModule, FormsModule],
   templateUrl: './orders.component.html',
   styleUrl: './orders.component.scss'
 })
@@ -20,8 +24,11 @@ export class OrdersComponent implements OnInit {
   private presupuestoService = inject(PresupuestoService);
   private messageSwal = inject(MessageSwal);
 
+  private authSvr = inject(AuthService);
+
   user = this.authService.usuario;
   rowSelected:any = null;
+
   filters = { date: '', status: '' };
   listOrders:any = [];
   filterDates = [
@@ -67,11 +74,24 @@ export class OrdersComponent implements OnInit {
     },
   ];
 
+  usuario:any;
+
   ngOnInit(): void {
+    this.authSvr.validarRenovarToken().subscribe((res) => {
+      console.log('resvalidarRenovarToken', res);
+      console.log('resvalidarRenovarToken', res);
+      
+      this.usuario = this.authSvr.usuario;
+      console.log('this.usuario', this.usuario);
+
+    });
     this.getPresupuestos();
   }
 
   getPresupuestos() {
+    console.log('this.filters', this.filters);
+    console.log('this.filterStatus', this.filterStatus);
+    
     let body:any = {
       ...this.filters,
     };

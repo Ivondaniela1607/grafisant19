@@ -1,7 +1,16 @@
-<div class="contenedor " style="border: 1px red solid;">
+<div class="contenedor" >
   <div class="grid grid-cols-12 gap-4">
-    <div class="col-span-3 border-end pb-4" style="border: 1px purple solid;">
+    <div class="col-span-3 border-end py-4" >
       <div class="mb-3">
+        <mat-form-field class="w-full">
+          <mat-label>Fecha:</mat-label>
+          <mat-select [(ngModel)]="filters.date" (selectionChange)="getPresupuestos()">
+            <mat-option *ngFor="let item of filterDates" [value]="item.value">
+              {{ item.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        
     <!--     <ng-select
           bindValue="value"
           [items]="filterDates"
@@ -21,6 +30,14 @@
         </ng-select> -->
       </div>
       <div class="mb-3">
+        <mat-form-field class="w-full">
+          <mat-label>Fecha:</mat-label>
+          <mat-select [(ngModel)]="filters.status"(selectionChange)="getPresupuestos()">
+            <mat-option *ngFor="let item of filterStatus" [value]="item.value">
+              {{ item.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 <!--         <ng-select
           bindValue="value"
           [items]="filterStatus"
@@ -42,7 +59,7 @@
         </ng-select> -->
       </div>
     </div>
-    <div class="col-span-9" style="border: 1px yellow solid;">
+    <div class="col-span-9" >
 <!--       *ngIf="user?.cargo == 'cliente'" TODO: cambiar poner a lado de w-full -->
       <div class="w-full" >
         <div class="card-orders mb-3" *ngFor="let element of listOrders">
@@ -320,7 +337,6 @@
       (click)="modal.close('by: close icon')"
       aria-label="Close"
     ></button>
-
     <hr />
   </div>
   <div class="modal-body">

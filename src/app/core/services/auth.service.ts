@@ -63,7 +63,7 @@ export class AuthService {
         console.log("\x1b[34m%s\x1b[0m", "Respuesta del renovar token: ", resp);
         // this.isTokenExpiring(resp.token);
         localStorage.setItem("token", resp.token);
-        this.usuario.set(resp.user);
+        this.usuario = resp.user;
         console.log("Respuesta del renovar token: ", resp.user);
         this._authenticated = true;
         return true;

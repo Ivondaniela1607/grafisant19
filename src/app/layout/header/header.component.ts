@@ -18,7 +18,7 @@ export class HeaderComponent {
   private router = inject(Router);
   private authSvr = inject(AuthService);
   menuAll = [
-    { label: 'Inicio', routerLink: 'home' },
+    { label: 'Inicio', routerLink: '/' },
     { label: 'Quienes Somos', href: 'quienes-somos' },
     { label: 'Servicios', href: 'servicios' },
     { label: 'Contacto', href: 'contacto' },
@@ -30,13 +30,12 @@ export class HeaderComponent {
 
   constructor() {
     this.authSvr.validarRenovarToken().subscribe((res) => {
-      console.log('resvalidarRenovarToken', res);
-      
       this.usuario = this.authSvr.usuario;
       console.log('this.usuario', this.usuario);
+      
       this.valMenu();
     });
-    this.valMenu();
+
   }
 
   navigate(id: any) {
@@ -52,8 +51,6 @@ export class HeaderComponent {
   }
 
   valMenu() {
-    this.usuario = this.authSvr.usuario;
-    console.log('this.usuario', this.usuario);
     if (this.usuario) {
       this.menu = this.menuAll.filter((c) => c.label != 'Iniciar Sesión');
     } else {
@@ -67,7 +64,7 @@ export class HeaderComponent {
   }
 
   perfil() {
-    this.router.navigate(['/home/perfil']);
+    this.router.navigate(['/perfil']);
   }
 
   onLogout(e: Event) {
