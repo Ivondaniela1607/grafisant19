@@ -14,9 +14,11 @@ export class HeaderComponent {
   @ViewChild('trigger', { static: false }) trigger!: ElementRef;
   usuario:any;
   isPopoverOpenChatsArchivados = signal<boolean>(false);
+
   /* servicios */
   private router = inject(Router);
   private authSvr = inject(AuthService);
+
   menuAll = [
     { label: 'Inicio', routerLink: '/' },
     { label: 'Quienes Somos', href: 'quienes-somos' },
@@ -25,8 +27,8 @@ export class HeaderComponent {
     // { label: 'Pedidos', routerLink: 'pedidos' },
     { label: 'Iniciar Sesión', routerLink: 'auth/login' },
   ];
-  menu = [...this.menuAll];
 
+  menu = [...this.menuAll];
 
   constructor() {
     this.authSvr.validarRenovarToken().subscribe((res) => {

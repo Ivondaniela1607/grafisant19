@@ -5,11 +5,12 @@ import { environment } from '../../../../environments/environment';
 import { FilesUtils } from '../../../utils/files';
 import { MessageSwal } from '../../../utils/message';
 import { CommonModule } from '@angular/common';
+import { SliderUltimosProyectosComponent } from '../components/slider-ultimos-proyectos/slider-ultimos-proyectos.component';
 
 
 @Component({
   selector: 'app-detail-producto',
-  imports: [CommonModule],
+  imports: [SliderUltimosProyectosComponent, CommonModule],
   templateUrl: './detail-producto.component.html',
   styleUrl: './detail-producto.component.scss'
 })
@@ -58,6 +59,8 @@ export class DetailProductoComponent {
       next: (res: any) => {
 /*         this.app.closeLoader(); */
         this.data = res;
+        console.log('this.data', this.data);
+        
         if (res.length == 0) {
           this.messageSwal.showError(
             'Consulta Datos',

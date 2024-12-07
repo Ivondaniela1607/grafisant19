@@ -1,0 +1,28 @@
+<div class="container-fluid">
+  <owl-carousel-o [options]="customOptions">
+    <ng-container *ngFor="let item of clientes; let index = index">
+      {{item.id_img}}
+      <ng-template let-owlItem carouselSlide [id]="item.id_img">
+        <div
+          [id]="item.id_img"
+          class="timeline-carousel__item slide"
+          [ngClass]="{ 'center-card': !owlItem.isCentered }"
+        >
+          <div class="timeline-carousel__image" [ngStyle]="{'transform': index === owlItem.active ? 'scale(1.3)' : 'scale(0.6)'}">
+            <div
+              style="border-radius: 12px;"
+              class="media-wrapper media-wrapper--overlay"
+              [ngStyle]="{
+                'background-image': 'url(' + urlClientes + item.img + ')',
+                'background-position': 'center center',
+                'background-size': 'cover',
+                'height': '250px',
+                'margin-right': '20px'
+              }"
+            ></div>
+          </div>
+        </div>
+      </ng-template>
+    </ng-container>
+  </owl-carousel-o>
+</div>

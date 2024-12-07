@@ -147,26 +147,29 @@
         los productos sean nítidas y vibrantes.
       </p>
       <div class="grid grid-cols-12 mt-4 gap-2">
-        <div class="lg:col-span-4 md:col-span-4 col-span-12 p-2 drop-shadow border border-gray-200 rounded-md mt-2" *ngFor="let item of servicios">
-          <img
-            class=""
-            src="{{ urlServices + item.img_principal }}"
-            alt=""
-          />
-          <div class="p-4">
-            <h3 class="text-2xl font-bold">{{item.nombre_servicio}}</h3>
-            <p class="text-gray-500 font-light text-lg  mt-3 mb-3 detail-service">
-              {{item.descripcion}}
-            </p>
-            <div class="flex items-center ">
-              <strong><a (click)="verMas(item.id_servicio)" class="cursor-pointer">Ver mas</a></strong>
-              <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
-                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-              </svg>
-              
+        @for (item of servicios; track $index) {
+          <div class="lg:col-span-4 md:col-span-4 col-span-12 p-2 drop-shadow border border-gray-200 rounded-md mt-2"
+           >
+            <img
+              class=""
+              src="{{ urlServices + item.img_principal }}"
+              alt=""
+            />
+            <div class="p-4">
+              <h3 class="text-2xl font-bold">{{item.nombre_servicio}}</h3>
+              <p class="text-gray-500 font-light text-lg  mt-3 mb-3 detail-service">
+                {{item.descripcion}}
+              </p>
+              <div class="flex items-center ">
+                <strong><a (click)="verMas(item.id_servicio)" class="cursor-pointer">Ver mas</a></strong>
+                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                </svg>
+                
+              </div>
             </div>
           </div>
-        </div>
+        }
       </div>
     </div>
   </div>
@@ -199,7 +202,7 @@
   </div>
   <div class="container-fluid w-100">
 
-     <!--  <app-slider-clientes [clientes]="clientes" [urlClientes]="urlClientes"></app-slider-clientes> -->
+      <app-slider-clientes [clientes]="clientes" [urlClientes]="urlClientes"></app-slider-clientes>
 
   </div>
 
