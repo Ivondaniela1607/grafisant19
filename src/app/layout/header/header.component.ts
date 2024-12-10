@@ -24,7 +24,7 @@ export class HeaderComponent {
     { label: 'Quienes Somos', href: 'quienes-somos' },
     { label: 'Servicios', href: 'servicios' },
     { label: 'Contacto', href: 'contacto' },
-    // { label: 'Pedidos', routerLink: 'pedidos' },
+     { label: 'Pedidos', routerLink: 'pedidos' },
     { label: 'Iniciar Sesión', routerLink: 'auth/login' },
   ];
 
@@ -33,15 +33,12 @@ export class HeaderComponent {
   constructor() {
     this.authSvr.validarRenovarToken().subscribe((res) => {
       this.usuario = this.authSvr.usuario;
-      console.log('this.usuario', this.usuario);
-      
       this.valMenu();
     });
 
   }
 
   navigate(id: any) {
-    
     if (id) {
       const element = document.getElementById(id);
       if (element) {
@@ -56,6 +53,7 @@ export class HeaderComponent {
     if (this.usuario) {
       this.menu = this.menuAll.filter((c) => c.label != 'Iniciar Sesión');
     } else {
+      this.menu = this.menuAll.filter((c) => c.label != 'Pedidos');
       this.menu = [...this.menuAll];
     }
   }
@@ -71,13 +69,12 @@ export class HeaderComponent {
 
   onLogout(e: Event) {
     e.preventDefault();
-    localStorage.removeItem('isLoggedin');
-/*     this.ls.remove('modules');
-    this.ls.remove('token');
-    this.router.navigate(['home']);
-    this.authSvr.usuario = null;
-    this.usuario = null;
- */
+    localStorage.removeItem("isLoggedin");
+    localStorage.removeItem("token");
+    localStorage.removeItem("operators");
+    localStorage.removeItem("tok");
+    //localStorage.removeItem('isLoggedin')
+    this.router.navigate(["/auth/login"]);
     this.valMenu();
   }
 

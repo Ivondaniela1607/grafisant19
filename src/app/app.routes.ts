@@ -7,6 +7,7 @@ import { FormSolicitarPresupuestoComponent } from './forms/form-solicitar-presup
 import { OrdersComponent } from './pages/orders/orders.component';
 import { AuthGuard } from './core/guard/auth.guard';
 import { LoggedInGuard } from './core/guard/logged-in.guard';
+import { RegisterComponent } from './pages/auth/register/register.component';
 
 export const routes: Routes = [
   {
@@ -28,6 +29,7 @@ export const routes: Routes = [
         component: FormSolicitarPresupuestoComponent
       },
       {
+        canActivate: [LoggedInGuard],
         path: 'pedidos',
         component: OrdersComponent
       },
@@ -37,5 +39,9 @@ export const routes: Routes = [
   {
     path: 'auth/login',
     component: LoginComponent
+  },
+  {
+    path: 'auth/register',
+    component: RegisterComponent
   },
 ]

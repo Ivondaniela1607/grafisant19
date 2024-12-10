@@ -14,7 +14,7 @@ module.exports = {
           ed: "#2690CC",
           mu: "#9EB826",
         },
-        primary: '#c71522', // Add a custom primary color
+        primary: '#B0CA13', // Add a custom primary color
         secondary: '#7987a1', // Add a custom secondary color
         grayLigth: '#F1F3F6',
       },

@@ -222,7 +222,7 @@ body {
 }
 
 .layer-1 {
-  background-image: url("/src/assets/images/hero/mariposas.png");
+  background-image: url("../../../assets/images/hero/mariposas.png");
   background-position: left bottom;
   margin-left: 50px !important;
   margin-bottom: 100px;
@@ -231,12 +231,12 @@ body {
 }
 
 .layer-2 {
-  background-image: url("/src/assets/images/hero/santiago.png");
+  background-image: url("../../../assets/images/hero/santiago.png");
 
 }
 
 .layer-3 {
-  background-image: url("/src/assets/images/hero/Logo_con_sombra.svg");
+  background-image: url("../../../assets/images/hero/Logo_con_sombra.svg");
   // width: 450px;
   // height: auto;
   background-position: left top;
@@ -248,7 +248,7 @@ body {
 .layer-4 {
 
   // sombra negra
-  background-image: url("/src/assets/iages/hero/cloud.png");
+  background-image: url("../../../assets/images/hero/cloud.png");
   background-position: center top;
   background-size: 850px;
   margin-left: 150px !important;

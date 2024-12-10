@@ -11,10 +11,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
+import { IListOrders } from '../../core/interfaces/presupuesto.interface';
 
 @Component({
   selector: 'app-orders',
-  imports: [MatInputModule, MatFormFieldModule, MatSelectModule, CommonModule, FormsModule],
+  imports: [TableOrdersComponent, MatInputModule, MatFormFieldModule, MatSelectModule, CommonModule, FormsModule],
   templateUrl: './orders.component.html',
   styleUrl: './orders.component.scss'
 })
@@ -30,7 +31,7 @@ export class OrdersComponent implements OnInit {
   rowSelected:any = null;
 
   filters = { date: '', status: '' };
-  listOrders:any = [];
+  listOrders:IListOrders[] = [];
   filterDates = [
     {
       label: 'Todo',
@@ -78,20 +79,12 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit(): void {
     this.authSvr.validarRenovarToken().subscribe((res) => {
-      console.log('resvalidarRenovarToken', res);
-      console.log('resvalidarRenovarToken', res);
-      
       this.usuario = this.authSvr.usuario;
-      console.log('this.usuario', this.usuario);
-
     });
     this.getPresupuestos();
   }
 
   getPresupuestos() {
-    console.log('this.filters', this.filters);
-    console.log('this.filterStatus', this.filterStatus);
-    
     let body:any = {
       ...this.filters,
     };
@@ -102,11 +95,8 @@ export class OrdersComponent implements OnInit {
     this.presupuestoService.getPresupuestos(body).subscribe({
       next: async (res: any) => {
 
-        
         /* this.app.closeLoader(); */
         this.listOrders = res;
-
-
         this.listOrders = this.listOrders.map((c:any) => {
           if (c.estado == 'FINALIZADO') {
             c.percentage = 100;
@@ -117,7 +107,6 @@ export class OrdersComponent implements OnInit {
           }
           return c;
         });
-        console.log('this.listOrders', this.listOrders);
       },
     });
   }

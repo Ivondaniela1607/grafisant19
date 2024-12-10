@@ -59,8 +59,7 @@ export class DetailProductoComponent {
       next: (res: any) => {
 /*         this.app.closeLoader(); */
         this.data = res;
-        console.log('this.data', this.data);
-        
+
         if (res.length == 0) {
           this.messageSwal.showError(
             'Consulta Datos',

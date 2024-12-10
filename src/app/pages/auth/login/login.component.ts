@@ -3,7 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../../../core/services/auth.service';
 import { Validators, FormGroup, FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { random } from 'lodash';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -11,7 +11,7 @@ import { MatCheckboxModule } from "@angular/material/checkbox";
 
 @Component({
   selector: 'app-login',
-  imports: [MatCheckboxModule, MatInput, MatFormField, MatLabel, FormsModule, CommonModule, ReactiveFormsModule],
+  imports: [RouterLink, MatCheckboxModule, MatInput, MatFormField, MatLabel, FormsModule, CommonModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -45,13 +45,11 @@ export class LoginComponent implements OnInit {
     const body = {
       ...this.signInForm.value,
     };
-    console.log('bpdy', body);
-    
+
     body.usuario = body.usuario.trim();
     this._authService.login(body).subscribe({
       next: (res: any) => {
-        console.log('resss', res);
-        
+
         //this.app.closeLoader()
 
         //  console.log('\x1b[34m%s\x1b[0m', 'res Login', JSON.stringify(res.user.extension));

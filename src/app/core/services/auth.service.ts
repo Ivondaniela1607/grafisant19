@@ -34,13 +34,11 @@ export class AuthService {
     return this.http.post<T>(`${this._urlServer}login`, body).pipe(
       tap({
         next: (resp: any) => {
-          console.log('resp', resp);
-          
+
           localStorage.setItem("token", JSON.stringify(resp["token"]));
 
           resp.user["loginDate"] = moment().format("YYYY-MM-DD HH:mm:ss");
           this.usuario = resp.user;
-          console.log("this.usuario", this.usuario);
 
           this.guardarStorage(resp["token"]);
           //abrir pagina en nueva ventana
@@ -56,15 +54,13 @@ export class AuthService {
   }
 
   validarRenovarToken(): Observable<any> {
-    console.log(`${this._urlServer}renovar`);
-    
+
     return this._httpClient.get(`${this._urlServer}renovar`, {}).pipe(
       map((resp: any) => {
-        console.log("\x1b[34m%s\x1b[0m", "Respuesta del renovar token: ", resp);
         // this.isTokenExpiring(resp.token);
         localStorage.setItem("token", resp.token);
         this.usuario = resp.user;
-        console.log("Respuesta del renovar token: ", resp.user);
+  
         this._authenticated = true;
         return true;
       }),

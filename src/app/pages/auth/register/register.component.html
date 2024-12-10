@@ -1,0 +1,87 @@
+<div class="bg-image">
+  <div class="grid grid-cols-12 w-full mx-0">
+    <div class="md:col-span-4 lg:col-span-4"></div>
+    <div class="md:col-span-4 lg:col-span-4" style="max-height: 100vh">
+      <div class="shadow-md bg-white py-6 px-4">
+        <div class="flex justify-center flex-col items-center">
+          <img
+            width="200px"
+            src="assets/images/logo/Logo_2ldpi.svg"
+            alt="logo"
+          />
+          <h5 class="text-gray-400 text-md mb-4 p-2 text-center">
+            Crear tu cuenta gratis.
+          </h5>
+        </div>
+        <form [formGroup]="form">
+          <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-6 mb-3">
+              <mat-form-field class="w-full">
+                <mat-label>Categoria</mat-label>
+                <mat-select formControlName="id_tipo_documento">
+                  @for (item of typesDocument; track item) {
+                  <mat-option [value]="item.id">
+                    {{ item.nombre }}
+                  </mat-option>
+                  }
+                </mat-select>
+              </mat-form-field>
+          
+            </div>
+            <div class="col-span-6 mb-3">
+              <mat-form-field class="w-full">
+                <mat-label>Documento</mat-label>
+                <input formControlName="documento" matInput />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-6 mb-3">
+              <mat-form-field class="w-full">
+                <mat-label>Nombre</mat-label>
+                <input formControlName="nombre" matInput />
+              </mat-form-field>
+       
+            </div>
+            <div class="col-span-6 mb-3">
+              <mat-form-field class="w-full">
+                <mat-label>Apellido</mat-label>
+                <input formControlName="apellido" matInput />     
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-6 mb-3">
+              <mat-form-field class="w-full">
+                <mat-label>Email</mat-label>
+                <input formControlName="email" matInput />
+              </mat-form-field>
+        
+            </div>
+            <div class="col-span-6 mb-3">
+              <mat-form-field class="w-full">
+                <mat-label>Password</mat-label>
+                <input formControlName="password" matInput />     
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="flex justify-end flex-col items-end">
+            <div >
+              <button
+                [disabled]="form.invalid"
+                type="button"
+                class="disabled:opacity-50 disabled:cursor-not-allowed bg-primary p-2 rounded-md text-white"
+                (click)="onRegister()"
+              >
+                Registrarse
+              </button>
+            </div>
+            <a routerLink="/auth/login" class="mt-2 text-gray-400 cursor-pointer hover:text-green-900 duration-300">
+              Ya tienes un usuario? Iniciar sesión</a
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

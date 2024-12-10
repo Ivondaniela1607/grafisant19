@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
+import { ICliente } from '../../../../core/interfaces/presupuesto.interface';
 
 @Component({
   selector: 'app-slider-clientes',
@@ -11,17 +12,18 @@ import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 export class SliderClientesComponent {
 
 
-  @Input() clientes:any = [];
+  @Input() clientes: ICliente[] = [];
   @Input() urlClientes = '';
 
   customOptions: OwlOptions = {
+    items: 3,
+    loop: true,
     autoplay: true,
     autoplayTimeout:20000,
     slideTransition: 'linear',
 
     fluidSpeed: true,
     autoWidth: true,
-    loop: false,
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
@@ -39,8 +41,8 @@ export class SliderClientesComponent {
     startPosition: 'URLHash',
 
     navText: [
-      `<em class='mdi mdi-chevron-left'></em>`,
-      `<em class="mdi mdi-chevron-right"></em>`,
+      `<span class="material-icons">arrow_back_ios</span>`,
+      `<span class="material-icons">arrow_forward_ios</span>`
     ],
     // navText: ['Anterior', 'Siguiente'],
     nav: true,
@@ -55,7 +57,10 @@ export class SliderClientesComponent {
         items: 3,
       },
       940: {
-        items: 8,
+        items: 6,
+      },
+      1200: {
+        items: 6,
       },
     },
   }

@@ -12,10 +12,11 @@ export class SliderUltimosProyectosComponent {
 
   @Input() data:any = [];
   @Input() url = '';
-
   customOptions: OwlOptions = {
-    autoWidth: false,
-    loop: false,
+    items: 3,
+    loop: true,
+    autoWidth: true,
+
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
@@ -31,8 +32,8 @@ export class SliderUltimosProyectosComponent {
     stagePadding: 30,
     startPosition: 'URLHash',
     navText: [
-      `<em class='mdi mdi-chevron-left'></em>`,
-      `<em class="mdi mdi-chevron-right"></em>`,
+      `<span class="material-icons">arrow_back_ios</span>`,
+      `<span class="material-icons">arrow_forward_ios</span>`
     ],
     // navText: ['Anterior', 'Siguiente'],
     nav: true,
@@ -49,6 +50,9 @@ export class SliderUltimosProyectosComponent {
       940: {
         items: 3,
       },
+      1200: {
+        items: 3,
+      },
     },
-  }
+  };
 }

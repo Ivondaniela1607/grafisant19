@@ -62,8 +62,7 @@ export class HomeComponent {
       next: async (res: any) => {
  /*        this.app.closeLoader(); */
         this.data = res;
-        console.log('this.data', this.data);
-        
+
         if (res.length == 0) {
    /*        this.messageSwal.showError(
             'Consulta Datos',
@@ -76,14 +75,9 @@ export class HomeComponent {
   }
 
   geClientes(){
-/*     this.app.openLoader(); */
     this.serviciosService.getClientes({}).subscribe({
       next: async (res: any) => {
-        console.log('reessss', res);
-    /*     this.app.closeLoader(); */
         this.clientes = res;
-        console.log('this.clientes', this.clientes);
-        
 
         if (res.length == 0) {
      /*      this.messageSwal.showError(

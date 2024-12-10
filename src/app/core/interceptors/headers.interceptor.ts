@@ -14,16 +14,13 @@ export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
       },
     })
   : req;
-  // Pasar la solicitud clonada o original al siguiente paso
+
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) => {
-
-      // Redirigir si es un error 401 (No autorizado)
-      if (error.status === 401) {
-        _router.navigate(['/auth/login']);
+      if (error && error.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('modules');
       }
-
-      // Propagar el error para que sea manejado más adelante si es necesario
       return throwError(() => error);
     })
   );

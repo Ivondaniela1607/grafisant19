@@ -1,1 +1,178 @@
-<p>table-orders works!</p>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="codigo">
+      <th mat-header-cell *matHeaderCellDef> Código </th>
+      <td mat-cell *matCellDef="let element"> {{element.codigo}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="cliente">
+      <th mat-header-cell *matHeaderCellDef> Cliente </th>
+      <td mat-cell *matCellDef="let element"> {{element.cliente}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="fecha_creado">
+      <th mat-header-cell *matHeaderCellDef> Fecha creado </th>
+      <td mat-cell *matCellDef="let element"> {{element.fecha_solicitud | date : "dd/MM/yyyy"}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="estado">
+      <th mat-header-cell *matHeaderCellDef> Estado </th>
+      <td mat-cell *matCellDef="let element"> 
+        <span
+          [ngClass]="{
+            'text-yellow-600': element.estado == 'PENDIENTE',
+            'text-red-600': element.estado == 'CANCELADO',
+            'text-blue-600': element.estado == 'APROBADO',
+            'text-green-600': element.estado == 'FINALIZADO',
+            'text-cyan-400': element.estado == 'ENVIADO',
+            'text-purple-600': element.estado == 'ACEPTADO'
+          }"
+        >{{ element.estado }}</span
+      > </td>
+    </ng-container>
+
+    <ng-container matColumnDef="enviar">
+      <th mat-header-cell *matHeaderCellDef> Enviar </th>
+      <td mat-cell *matCellDef="let element">
+        @if(element.estado != 'CANCELADO'){
+          <div class="flex justify-center">
+            <button (click)=" openDialog(element, dialogTemplate)">
+              <svg class="w-5 h-5"  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+                <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+              </svg>
+            </button>
+          </div>
+        }      
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="aceptado">
+      <th mat-header-cell *matHeaderCellDef> Aceptado </th>
+      <td mat-cell *matCellDef="let element">
+        @if(element.estado == 'ACEPTADO'){
+          <div class="flex justify-center">
+            <button>
+              <svg class="w-5 h-5 text-purple-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              </svg>
+              </button>
+          </div>
+        }
+     </td>
+    </ng-container>
+
+    <ng-container matColumnDef="aprobar">
+      <th mat-header-cell *matHeaderCellDef> Aprobar </th>
+      <td mat-cell *matCellDef="let element"> 
+        @if(element.estado == 'ACEPTADO'){
+          <div class="flex justify-center">
+            <button>
+              <svg class="w-5 h-5 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+              </svg>
+            </button>
+          </div> 
+        }
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cancelar">
+      <th mat-header-cell *matHeaderCellDef> Cancelar </th>
+      <td mat-cell *matCellDef="let element"> 
+        @if(element.estado == 'PENDIENTE'){
+          <button (click)="cancel(element)" class="flex justify-center">
+            <svg class="w-5 h-5 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+          </button>
+        }
+       </td>
+    </ng-container>
+
+    <ng-container matColumnDef="finalizar">
+      <th mat-header-cell *matHeaderCellDef> Finalizar </th>
+    
+      <td mat-cell *matCellDef="let element"> 
+        @if(element.estado == 'APROBADO'){
+          <button (click)="finish(element)" class="flex justify-center">
+            <svg class="w-5 h-5 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+            </svg>
+          </button>
+        }
+     </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[ 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+</div>
+
+<ng-template #dialogTemplate>
+  <h1 mat-dialog-title >
+    <div class="flex text-cyan-500 items-center pt-4 text-sm font-semibold">
+      <svg class="w-5 h-5 ms-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+      </svg>
+      Presupuesto
+    </div>
+  </h1>
+  <div mat-dialog-content>
+    <p class="text-xl mb-4">Documento del presupuesto</p>
+    <input type="file" id="fileInput" (change)="onFileSelected($event)" class="hidden" #fileInput multiple />
+    @for (item of selectedFiles; track item) {
+      <div class="flex justify-between" >
+        <li  (click)="abrirDoc(item?.ruta)" class="ml-2 text-gray-500 flex items-center mb-1 cursor-pointer">
+          {{ item.name ? item.name : item.nombre_archivo }}
+        </li>
+        @if(presupuesto.estado == 'ENVIADO'){
+          <button  (click)="editDoc(presupuesto)">
+            <svg class="w-5 h-5 hover:text-green-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+            </svg>
+  
+          </button>
+        }
+      </div>
+    }
+    @if(presupuesto.estado == 'PENDIENTE' || editarDocumento){
+      <button
+        type="button"
+        (click)="fileInput.click()"
+        class="mt-2 flex py-2 px-4 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-700 focus:outline-none"
+      >
+        <svg
+          class="w-5 h-5 me-1"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13"
+          />
+        </svg>
+        Subir archivo
+      </button>
+    }
+  </div>
+  <div mat-dialog-actions>
+    <div class="flex justify-between w-full">
+      <button class="bg-red-600 hover:bg-red-500 text-white py-2 px-4 rounded " mat-button mat-dialog-close>Cerrar</button>
+      <button [disabled]="selectedFiles.length === 0 " class="bg-green-600  text-white py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed" mat-button (click)="cargarPresupuesto()">Aceptar</button>
+
+    </div>
+  </div>
+</ng-template>
