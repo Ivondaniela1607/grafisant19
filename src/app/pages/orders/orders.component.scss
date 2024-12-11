@@ -32,3 +32,6 @@
   grid-template-columns: 40% 40% 20%;
 }
 
+::ng-deep .custom-progress-bar mat-progress-bar {
+  height: 10px !important;
+}

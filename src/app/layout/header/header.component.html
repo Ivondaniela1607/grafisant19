@@ -79,14 +79,14 @@
           }
           <button (click)="solicitarPresupuesto()"
             class="bg-[#b0CA13] rounded-full hover:bg-[#d0CA13]  duration-300 px-5 py-2 md:m-0 lg:m-0 mt-2">
-            Solicitar Presupuesto
+            Solicitar presupuesto
           </button>
         </div>
         @if (usuario) {
           <div>
             <button class="flex text-gray-900 items-center" (click)="togglePopoverChatsArchivados()" cdkOverlayOrigin
               #trigger="cdkOverlayOrigin">
-              {{ usuario?.nombre + " " + usuario?.apellido }}
+              {{ usuario?.nombre + " " + usuario?.apellido | titlecase}}
               <svg class="w-10 h-10 text-gray-400 ms-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                 stroke-width="1.5" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -135,7 +135,7 @@
       </div>
       <div class="text-center">
         <p class="font-semibold">
-          {{ usuario?.nombre + " " + usuario?.apellido }}
+          {{ usuario?.nombre + " " + usuario?.apellido | titlecase}}
         </p>
         <p class="text-sm text-gray-400">
           {{ usuario?.email }}

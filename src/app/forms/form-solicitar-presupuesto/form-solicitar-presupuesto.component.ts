@@ -9,11 +9,11 @@ import { Router } from '@angular/router';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from '@angular/material/input';
 import { ICategoria, IPresupuesto, ISubcategoria } from '../../core/interfaces/presupuesto.interface';
-
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-form-solicitar-presupuesto',
-  imports: [MatInputModule, MatFormFieldModule, MatSelectModule, CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [MatProgressSpinnerModule, MatInputModule, MatFormFieldModule, MatSelectModule, CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './form-solicitar-presupuesto.component.html',
   styleUrl: './form-solicitar-presupuesto.component.scss'
 })
@@ -26,6 +26,7 @@ export class FormSolicitarPresupuestoComponent implements OnInit {
   subcategorias = signal<ISubcategoria[]>([]);
   add = signal<boolean>(true);
   subcat = signal<boolean>(true);
+  loading = signal<boolean>(false);
 
 
   private formBuilder = inject(FormBuilder);
@@ -66,6 +67,8 @@ export class FormSolicitarPresupuestoComponent implements OnInit {
       ...this.formPresupuesto.value,
       presupuesto: this.presupuesto(),
     };
+
+    this.loading.set(true);
     this.presupuestoService.savePresupuestos(body).subscribe({
       next: (res: any) => {
         if (!res['ok']) {

@@ -1,13 +1,13 @@
-import { HttpErrorResponse } from "@angular/common/http";
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../../../core/services/auth.service';
 import { Validators, FormGroup, FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { random } from 'lodash';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MessageSwal } from "../../../utils/message";
 
 @Component({
   selector: 'app-login',
@@ -19,16 +19,13 @@ export class LoginComponent implements OnInit {
 
   ip = "";
   signInForm: UntypedFormGroup = new UntypedFormGroup({});
-
   loginForm: FormGroup = new FormGroup({}); 
-/*   ls: SecureLS = new SecureLS(); */
   imagenCard = 'assets/images/svg/auth_side' + random(1, 3) + '.svg';
 
   private _authService = inject(AuthService);
   private router = inject(Router)
   private _formBuilder = inject(UntypedFormBuilder)
-  private _activatedRoute = inject(ActivatedRoute)
-  private _router = inject(Router)
+  private messageSwal = inject(MessageSwal);
 
 
   ngOnInit(): void {
@@ -49,7 +46,14 @@ export class LoginComponent implements OnInit {
     body.usuario = body.usuario.trim();
     this._authService.login(body).subscribe({
       next: (res: any) => {
-
+        if(!res.user){
+          this.messageSwal.showError(
+            'Credenciales incorrectas',
+            'Usuario y/o contrseña incorrectas'
+          );
+          return;
+        }
+        
         //this.app.closeLoader()
 
         //  console.log('\x1b[34m%s\x1b[0m', 'res Login', JSON.stringify(res.user.extension));

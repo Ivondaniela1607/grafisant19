@@ -34,15 +34,18 @@ export class AuthService {
     return this.http.post<T>(`${this._urlServer}login`, body).pipe(
       tap({
         next: (resp: any) => {
-
-          localStorage.setItem("token", JSON.stringify(resp["token"]));
-
-          resp.user["loginDate"] = moment().format("YYYY-MM-DD HH:mm:ss");
-          this.usuario = resp.user;
-
-          this.guardarStorage(resp["token"]);
-          //abrir pagina en nueva ventana
-          return resp.user;
+          
+          if(resp.user){
+            localStorage.setItem("token", JSON.stringify(resp["token"]));
+  
+            resp.user["loginDate"] = moment().format("YYYY-MM-DD HH:mm:ss");
+            this.usuario = resp.user;
+  
+            this.guardarStorage(resp["token"]);
+            //abrir pagina en nueva ventana
+          }
+          
+          return resp;
         },
         error: (error: any) => {
           if (error.error.error != null) {
@@ -65,7 +68,6 @@ export class AuthService {
         return true;
       }),
       catchError((err) => {
-        console.log("Error", err);
         return of(false);
       }),
     );

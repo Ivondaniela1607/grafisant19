@@ -21,7 +21,7 @@ export class HeaderComponent {
 
   menuAll = [
     { label: 'Inicio', routerLink: '/' },
-    { label: 'Quienes Somos', href: 'quienes-somos' },
+    { label: 'Quienes somos', href: 'quienes-somos' },
     { label: 'Servicios', href: 'servicios' },
     { label: 'Contacto', href: 'contacto' },
      { label: 'Pedidos', routerLink: 'pedidos' },

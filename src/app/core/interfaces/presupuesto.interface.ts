@@ -36,6 +36,7 @@ export interface IListOrders{
   fecha_creacion: string;
   fecha_estimada: string;
   fecha_real: string;
+  percentage: string;
 }
 
 export interface IFile {

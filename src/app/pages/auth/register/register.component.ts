@@ -1,21 +1,25 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { UsersService } from '../../../core/services/users.service';
-import { FormGroup, FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MessageSwal } from '../../../utils/message';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import {  Router, RouterLink } from '@angular/router';
+import Swal from 'sweetalert2';
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-register',
-  imports: [RouterLink, ReactiveFormsModule, FormsModule, MatInputModule, MatFormFieldModule, MatSelectModule,],
+  imports: [MatProgressSpinnerModule, RouterLink, ReactiveFormsModule, FormsModule, MatInputModule, MatFormFieldModule, MatSelectModule,],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
 
 
 export class RegisterComponent implements OnInit {
+
+  loading = signal<boolean>(false);
 
   form: UntypedFormGroup = new UntypedFormGroup({});
   typesDocument:any = [];
@@ -50,6 +54,7 @@ export class RegisterComponent implements OnInit {
 
   onRegister() {
     if (this.form.invalid) return;
+    this.loading.set(true);
     this.usersService.saveUser(this.form.value).subscribe({
       next: (res: any) => {
         if (!res['ok'] && res['email']) {
@@ -68,8 +73,18 @@ export class RegisterComponent implements OnInit {
           'Registro de usuario',
           `El usuario ${res['user']} se ha registrado con éxito`
         );
+        Swal.fire({
+          title: 'Credenciales Grafisants',
+          text: `Puede ingresar con el correo ingresado o el usuario generado  ${res['user']} `,
+          icon: 'info',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Aceptar',
+        }).then((result) => {
+          this.router.navigate(['/auth/login']);
+        });
 
-        this.router.navigate(['/auth/login']);
       },
       error: () => {
         this.messageSwal.showError(
@@ -78,9 +93,9 @@ export class RegisterComponent implements OnInit {
         );
       },
     });
-    localStorage.setItem('isLoggedin', 'true');
+ /*    localStorage.setItem('isLoggedin', 'true');
     if (localStorage.getItem('isLoggedin')) {
       this.router.navigate(['/']);
-    }
+    } */
   }
 }

@@ -12,10 +12,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { IListOrders } from '../../core/interfaces/presupuesto.interface';
+import { RouterLink } from '@angular/router';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-orders',
-  imports: [TableOrdersComponent, MatInputModule, MatFormFieldModule, MatSelectModule, CommonModule, FormsModule],
+  imports: [MatProgressBarModule, MatTooltipModule, RouterLink, TableOrdersComponent, MatInputModule, MatFormFieldModule, MatSelectModule, CommonModule, FormsModule],
   templateUrl: './orders.component.html',
   styleUrl: './orders.component.scss'
 })
@@ -31,7 +34,7 @@ export class OrdersComponent implements OnInit {
   rowSelected:any = null;
 
   filters = { date: '', status: '' };
-  listOrders:IListOrders[] = [];
+  listOrders: IListOrders[] = [];
   filterDates = [
     {
       label: 'Todo',
@@ -170,58 +173,39 @@ export class OrdersComponent implements OnInit {
     });
   }
 
-  info(row:any, content:any) {
+  info(row: IListOrders) {
     this.rowSelected = row;
-/*     this.modalService
-      .open(content, { centered: true, size: 'md' })
-      .result.then((result) => {})
-      .catch((res) => {}); */
-  }
-
-  rechazar(){
     Swal.fire({
       title: 'Confirme por favor',
-      text: `¿Está seguro de cancelar este presupuesto?`,
+      text: `¿Desea aceptar o rechazar el presupuesto indicado?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, estoy seguro',
+      confirmButtonText: 'Aceptar presupuesto',
+      cancelButtonText: 'Rechazar presupuesto',
     }).then((result) => {
       if (result.isConfirmed) {
+        let body = {
+          estado: 'ACEPTADO',
+          id_presupuesto: this.rowSelected.id_presupuesto,
+          presupuesto: this.rowSelected,
+        };
+        this.updateStatus(body);
+      } else {
         let body = {
           estado: 'RECHAZADO',
           id_presupuesto: this.rowSelected.id_presupuesto,
           presupuesto: this.rowSelected,
         };
         this.updateStatus(body);
-      } else {
-        this.rowSelected.cancelar = false;
       }
     });
   }
 
-  saveApr() {
-    Swal.fire({
-      title: 'Confirme por favor',
-      text: `¿Está seguro de aprobar este presupuesto?`,
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, estoy seguro',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        let body = {
-          estado: 'ACEPTADO',
-          id_presupuesto: this.rowSelected?.id_presupuesto,
-          presupuesto: this.rowSelected,
-        };
-        this.updateStatus(body);
-      } else {
-        this.rowSelected.cancelar = false;
-      }
-    });
-  }
 
+
+
+
+  
 }
