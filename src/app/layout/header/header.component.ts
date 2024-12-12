@@ -3,18 +3,20 @@ import { Component, ElementRef, inject, signal, ViewChild } from '@angular/core'
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { ImgErrorUserDirective } from '../../core/directives/imgErrorUser.directive';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-header',
-  imports: [OverlayModule, CommonModule, RouterLink, RouterLinkActive],
+  imports: [ImgErrorUserDirective, OverlayModule, CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
   @ViewChild('trigger', { static: false }) trigger!: ElementRef;
   usuario:any;
-  isPopoverOpenChatsArchivados = signal<boolean>(false);
-
+  isPopoverOpen = signal<boolean>(false);
+  url = environment.server_url+'/uploads/users/';
   /* servicios */
   private router = inject(Router);
   private authSvr = inject(AuthService);
@@ -84,9 +86,9 @@ export class HeaderComponent {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  togglePopoverChatsArchivados() {
-    this.isPopoverOpenChatsArchivados.set(!this.isPopoverOpenChatsArchivados());
-    if (this.isPopoverOpenChatsArchivados()) {
+  toggleOpcUsuario() {
+    this.isPopoverOpen.set(!this.isPopoverOpen());
+    if (this.isPopoverOpen()) {
 
     }
   }

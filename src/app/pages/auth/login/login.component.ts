@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.signInForm = this._formBuilder.nonNullable.group({
+    this.signInForm = this._formBuilder.group({
       usuario: ["", [Validators.required]],
       password: ["", Validators.required],
       rememberMe: [""],

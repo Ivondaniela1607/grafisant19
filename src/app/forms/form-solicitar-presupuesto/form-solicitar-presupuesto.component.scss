@@ -95,7 +95,7 @@ hr {
     display: none;
   }
 
-  .mat-mdc-text-field-wrapper {
+  ::ng-deep .mat-mdc-text-field-wrapper {
     border-bottom: 1px #a2cdb3 solid;
   }
 }

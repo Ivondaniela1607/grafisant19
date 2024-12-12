@@ -153,7 +153,6 @@ export class TableOrdersComponent implements OnInit{
     this.dialog.open( template,{
       width: "500px",
       disableClose: true,
-
     });
   }
 

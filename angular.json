@@ -29,8 +29,8 @@
             "styles": [
               "@angular/material/prebuilt-themes/rose-red.css",
               "src/styles/styles.scss",
-              "src/styles/vendors.scss"
-              
+              "src/styles/vendors.scss",
+              "src/styles/rose-red.css"
             ],
             "scripts": [],
             "server": "src/main.server.ts",
@@ -91,7 +91,8 @@
             "styles": [
               "@angular/material/prebuilt-themes/rose-red.css",
               "src/styles/styles.scss",
-              "src/styles/vendors.scss"
+              "src/styles/vendors.scss",
+              "src/styles/rose-red.css"
             ],
             "scripts": []
           }

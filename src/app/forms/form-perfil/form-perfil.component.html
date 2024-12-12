@@ -1,0 +1,146 @@
+<div class="hero">
+  <div class="contenedor relative">
+    <div class="grid grid-cols-12 w-full gap-4 " style="position: absolute; top: 125px">
+      <div class="col-span-4 flex shadow">
+        <div class="container-form">
+          <div
+            class="formulario flex flex-col justify-center items-center pt-3 pb-3"
+          >
+          @if(!imageChangedEvent){
+            <img class="w-[200px] h-[200px] object-cover rounded-md" [src]="croppedImage" />
+            
+          }
+
+          @if(iscropped()){
+            <input class="mt-4" type="file" accept=".jpg,.jpeg,.png" (change)="fileChangeEvent($event)" />
+          }
+       
+
+
+          @if(imageChangedEvent ){
+            <image-cropper
+                [imageChangedEvent]="imageChangedEvent"
+                [maintainAspectRatio]="true"
+                [aspectRatio]="4 / 3"
+                format="png"
+                (imageCropped)="imageCropped($event)"
+             
+            ></image-cropper>
+          }
+          
+          <div class="mt-4 flex justify-between gap-x-10">
+            @if (!iscropped()) {
+              <button (click)="cancelar()" class="px-4 py-2 rounded-md text-white bg-red-600">Cancelar</button>
+              <button (click)="recortar()" class="px-4 py-2 rounded-md text-white bg-primary">Recortar</button>
+            }
+          </div>
+          
+            <div class="flex justify-end flex-col text-center h-full">
+              <div>
+                <span class="text-center text-sm font-semibold text-gray-400" style="overflow-wrap: break-word;">{{ dataBefore?.usuario }}</span>
+              </div>
+              <div>
+                <span class="text-center text-sm font-semibold text-gray-400" style="overflow-wrap: break-word;">{{ dataBefore?.email }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-span-8 flex shadow">
+        <div class="container-form">
+          <form [formGroup]="formPerfil">
+            <div class="w-full" style="height: 100%; align-items: start">
+              <div class="formulario py-6">
+                <h4 class=" border-b-2 border-primary flex mt-2">
+                  <svg class="w-6 h-6 text-primary me-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" >
+                    <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
+                  </svg>
+                  Perfil
+                </h4>
+                <div class="grid grid-cols-12 mt-4">
+                  <div class="col-span-6 flex items-center">
+                    <label for="id_tipo_documento" class="form-label"
+                      >Tipo Documento</label
+                    >
+                  </div>
+                  <div class="col-span-6">
+                    <mat-form-field class="w-full">
+                      <mat-label>Tipo de documento</mat-label>
+                      <mat-select formControlName="id_tipo_documento">
+                        @for (item of typesDocument; track item) {
+                        <mat-option [value]="item.id">
+                          {{ item.nombre }}
+                        </mat-option>
+                        }
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="grid grid-cols-12 mt-4">
+                  <div class="md:col-span-6 flex items-center">
+                    <label for="documento" class="form-label">Documento</label>
+                  </div>
+                  <div class="md:col-span-6">
+                    <mat-form-field class="w-full">
+                      <mat-label>Documento</mat-label>
+                      <input formControlName="documento" matInput />
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="grid grid-cols-12 mt-4">
+                  <div class="md:col-span-6 flex items-center">
+                    <label for="nombre" class="form-label">Nombre</label>
+                  </div>
+                  <div class="md:col-span-6 ">
+                    <mat-form-field class="w-full">
+                      <mat-label>Nombre</mat-label>
+                      <input formControlName="nombre" matInput />
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="grid grid-cols-12 mt-4">
+                  <div class="md:col-span-6 flex items-center">
+                    <label for="apellido" class="form-label">Apellido</label>
+                  </div>
+                  <div class="md:col-span-6">
+                    <mat-form-field class="w-full">
+                      <mat-label>Apellido</mat-label>
+                      <input formControlName="apellido" matInput />     
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="grid grid-cols-12 mt-4">
+                  <div class="md:col-span-6 flex items-center">
+                    <label for="email" class="form-label">Email</label>
+                  </div>
+                  <div class="md:col-span-6">
+                    <mat-form-field class="w-full">
+                      <mat-label>Email</mat-label>
+                      <input formControlName="email" matInput />
+                    </mat-form-field>
+                  </div>
+                </div>
+                <hr  class="mt-4"/>
+                <div class="grid grid-cols-12 mt-4">
+                  <div class
+                  ="col-span-12">
+                    <div class="flex justify-end">
+                      <button
+                        (click)="update()"
+                        class="px-4 py-2 text-white bg-primary rounded-md cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed" 
+                        [disabled]="formPerfil.invalid "
+                      >
+              
+                        Actualizar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

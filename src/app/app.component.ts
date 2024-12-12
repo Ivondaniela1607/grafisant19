@@ -11,13 +11,10 @@ import { AuthService } from './core/services/auth.service';
 export class AppComponent {
   title = 'front';
 
-  loading = signal(true);
+  loading = signal(false);
 
   private authService = inject(AuthService);
   ngOnInit() {
 
-    setTimeout(() => {
-      this.loading.set(false);
-    }, 3000);
   }
 }

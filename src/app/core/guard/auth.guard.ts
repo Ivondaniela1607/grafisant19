@@ -17,8 +17,6 @@ export class AuthGuard {
   canActivate() {
     return this.authSvc.validarRenovarToken().pipe(
       tap((estAutenticado) => {
-        console.log('estAutenticado', estAutenticado);
-        
         if (!estAutenticado) {
           localStorage.removeItem("token");
           localStorage.removeItem("operators");
