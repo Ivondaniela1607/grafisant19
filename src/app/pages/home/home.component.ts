@@ -1,15 +1,17 @@
 import { Component, ElementRef, HostListener, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { ServiciosService } from '../../core/services/servicios.service';
 import { SliderUltimosProyectosComponent } from './components/slider-ultimos-proyectos/slider-ultimos-proyectos.component';
 import { SliderClientesComponent } from './components/slider-clientes/slider-clientes.component';
+import { CookieService } from 'ngx-cookie-service';
+
 
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, SliderUltimosProyectosComponent, SliderClientesComponent],
+  imports: [RouterLink, CommonModule, SliderUltimosProyectosComponent, SliderClientesComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -25,6 +27,7 @@ export class HomeComponent {
 
   private router = inject(Router);
   private serviciosService = inject(ServiciosService);
+  private cookieService = inject(CookieService);
 
   public readonly urlServices = environment.servicios_path;
 
@@ -36,6 +39,8 @@ export class HomeComponent {
     this.getServicios();
     this.getUltimosProyectos();
     this.geClientes();
+    this.cookieService.set('miCookie', 'Testdecookies');
+    this.cookieService.get('miCookie');
   }
 
   getServicios(){
@@ -115,6 +120,20 @@ export class HomeComponent {
       layer.style['-o-transform'] = translate3d;
       layer.style.transform = translate3d;
     });
+  }
+
+  navigate(id: any) {
+    console.log('id', id);
+    if (id) {
+      const element = document.getElementById(id);
+      console.log('element', element);
+      
+      if (element) {
+        element.scrollIntoView();
+      } else {
+        console.warn(`Element with id "${id}" not found.`);
+      }
+    }
   }
 
 }

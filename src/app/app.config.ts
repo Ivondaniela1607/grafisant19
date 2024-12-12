@@ -10,6 +10,7 @@ import { LoggedInGuard } from './core/guard/logged-in.guard';
 import { HTTP_INTERCEPTORS, withInterceptorsFromDi, provideHttpClient, withFetch, withInterceptors } from "@angular/common/http";
 import { ErrorResponseInterceptor } from './core/interceptors/error-response.interceptor';
 import { AuthInterceptor } from './core/interceptors/headers.interceptor';
+import { CookieService } from 'ngx-cookie-service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,7 +20,7 @@ export const appConfig: ApplicationConfig = {
     AuthGuard,
     FilesUtils,
     LoggedInGuard,
-
+    CookieService,
     MessageSwal, provideAnimationsAsync(),
   ]
 };
